@@ -1,0 +1,71 @@
+@import './variables.scss';
+
+/** Tab 页容器：固定视口 + 底部预留 tabBar，子级用 flex 填满，避免 100vh 双重扣减 */
+@mixin ccnc-tab-page {
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: $ccnc-bg-page;
+  padding-bottom: calc(100rpx + env(safe-area-inset-bottom));
+}
+
+/** Tab 页内 scroll-view：占满剩余高度 */
+@mixin ccnc-tab-scroll {
+  flex: 1;
+  height: 0;
+  min-height: 0;
+}
+
+/** 页面容器：灰底 + 安全区（非 tab 二级页可继续用 min-height） */
+@mixin ccnc-page {
+  min-height: 100vh;
+  background: $ccnc-bg-page;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/** 白卡片 */
+@mixin ccnc-card {
+  margin: 0 $ccnc-page-padding $ccnc-section-gap;
+  padding: $ccnc-card-padding;
+  background: $ccnc-bg-card;
+  border-radius: $ccnc-radius-lg;
+  box-shadow: $ccnc-shadow-card;
+}
+
+/** 自定义顶栏（碳期权等二级页） */
+@mixin ccnc-nav-bar {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 $ccnc-page-padding;
+  padding-top: env(safe-area-inset-top);
+  background: $ccnc-bg-card;
+
+  &__title {
+    flex: 1;
+    text-align: center;
+    font-size: 34rpx;
+    font-weight: 600;
+    color: $ccnc-text-primary;
+  }
+}
+
+/** 产品列表卡片 */
+@mixin ccnc-product-card {
+  @include ccnc-card;
+  padding: 28rpx;
+
+  &__title {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: $ccnc-text-primary;
+  }
+}
+
+/** 绿色强调数值 */
+@mixin ccnc-value-green {
+  color: $ccnc-success;
+  font-weight: 600;
+}

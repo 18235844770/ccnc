@@ -1,0 +1,16 @@
+﻿{
+    "adminToken":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE3ODQwMTMwNzksImV4cCI6MTc4NDYxNzg3OX0.OMy608PVF6m39gICSQYhwU5R9B3dOiPAyIGilFN02Rw",
+    "promoterToken":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoicHJvbW90ZXIiLCJ0eXBlIjoidXNlciIsImlhdCI6MTc4NDAxMzA4MCwiZXhwIjoxNzg0NjE3ODgwfQ.pW6AUgHaOx5bTnw08v7me4l0wdcux8Nf27PYLDjM1jA",
+    "promoBalAfterPay":  100050,
+    "pendingIds":  [
+                       3
+                   ],
+    "userToken":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoidmZ5ODg5MTU3IiwidHlwZSI6InVzZXIiLCJpYXQiOjE3ODQwMTMwODAsImV4cCI6MTc4NDYxNzg4MH0.HGu3FQd2LTm4kZ5jVNTmJ8UafaOLU8a04QGBg1thTx4",
+    "promoBalBefore":  100050,
+    "newUser":  "vfy889157",
+    "pendingAmounts":  [
+                           16.67
+                       ],
+    "userId":  6,
+    "orderId":  6
+}

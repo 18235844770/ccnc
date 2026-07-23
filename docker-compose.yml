@@ -1,0 +1,28 @@
+services:
+  mysql:
+    image: mariadb:10.11
+    container_name: ccnc-mysql
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: root123
+      MARIADB_DATABASE: ccnc
+      MARIADB_USER: ccnc
+      MARIADB_PASSWORD: ccnc123
+    ports:
+      - '3307:3306'
+    volumes:
+      - ccnc_mysql_data:/var/lib/mysql
+    command: --character-set-server=utf8mb4
+
+  redis:
+    image: redis:7-alpine
+    container_name: ccnc-redis
+    restart: unless-stopped
+    ports:
+      - '6380:6379'
+    volumes:
+      - ccnc_redis_data:/data
+
+volumes:
+  ccnc_mysql_data:
+  ccnc_redis_data:

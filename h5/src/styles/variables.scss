@@ -1,0 +1,61 @@
+/**
+ * CCNC H5 设计变量
+ * 参考：新建文件夹/H5 现有页面（首页、登录、碳期权、我的）
+ */
+
+// 品牌色
+$ccnc-primary: #1989fa;
+$ccnc-success: #07c160;
+$ccnc-danger: #ee0a24;
+$ccnc-accent: #00d4ff;
+$ccnc-warning: #ff976a;
+
+// 文字
+$ccnc-text-primary: #333;
+$ccnc-text-secondary: #666;
+$ccnc-text-placeholder: #999;
+$ccnc-text-inverse: #fff;
+
+// 背景
+$ccnc-bg-page: #f6f6f7;
+$ccnc-bg-card: #fff;
+$ccnc-bg-muted: #f7f8fa;
+
+// 间距（rpx）
+$ccnc-page-padding: 24rpx;
+$ccnc-card-padding: 32rpx;
+$ccnc-section-gap: 24rpx;
+
+// 圆角
+$ccnc-radius-sm: 8rpx;
+$ccnc-radius-md: 12rpx;
+$ccnc-radius-lg: 16rpx;
+$ccnc-radius-round: 50%;
+
+// 阴影
+$ccnc-shadow-card: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+$ccnc-shadow-icon: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+
+// 渐变（登录/首页 Banner）
+$ccnc-gradient-header: linear-gradient(
+  135deg,
+  #4a90d9 0%,
+  #5ba3e8 30%,
+  #7eb8e8 60%,
+  #a8d4f0 100%
+);
+
+$ccnc-gradient-antifraud: linear-gradient(
+  180deg,
+  #1a3a5c 0%,
+  #2a4a6c 50%,
+  #1e3d5e 100%
+);
+
+// TabBar
+$ccnc-tab-color: #999;
+$ccnc-tab-active: #1989fa;
+
+// 覆盖 uni 默认变量（与 wot-design 主题一致）
+$uni-color-primary: $ccnc-primary;
+$uni-bg-color-grey: $ccnc-bg-page;

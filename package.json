@@ -1,0 +1,28 @@
+{
+  "name": "ccnc",
+  "private": true,
+  "scripts": {
+    "dev:service": "pnpm --filter @ccnc/service start:dev",
+    "dev:admin": "pnpm --filter admin-web dev",
+    "dev:h5": "pnpm --filter uni-preset-vue dev:h5",
+    "build:shared": "pnpm --filter @ccnc/shared build",
+    "build:service": "pnpm --filter @ccnc/service build",
+    "build:admin": "pnpm --filter admin-web build",
+    "db:generate": "pnpm --filter @ccnc/service prisma:generate",
+    "db:migrate": "pnpm --filter @ccnc/service prisma:migrate",
+    "db:seed": "pnpm --filter @ccnc/service prisma:seed",
+    "test:e2e": "playwright test",
+    "test:e2e:h5": "playwright test --project=h5",
+    "test:e2e:admin": "playwright test --project=admin",
+    "test:e2e:api": "playwright test --project=api",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report e2e/playwright-report"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}

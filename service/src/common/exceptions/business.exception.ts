@@ -1,0 +1,55 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
+
+export class BusinessException extends HttpException {
+  constructor(
+    public readonly code: string,
+    message: string,
+    status: HttpStatus = HttpStatus.BAD_REQUEST,
+  ) {
+    super({ status: 'error', message, code }, status);
+  }
+}
+
+export const UserErrors = {
+  USERNAME_EXISTS: 'USERNAME_EXISTS',
+  USER_NOT_FOUND: 'USER_NOT_FOUND',
+  INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
+  USER_DISABLED: 'USER_DISABLED',
+  INVALID_INVITE_CODE: 'INVALID_INVITE_CODE',
+} as const;
+
+export const AdminErrors = {
+  INVALID_CREDENTIALS: 'ADMIN_INVALID_CREDENTIALS',
+  ADMIN_DISABLED: 'ADMIN_DISABLED',
+  USERNAME_EXISTS: 'ADMIN_USERNAME_EXISTS',
+} as const;
+
+export const PromoErrors = {
+  INVALID_PARENT: 'INVALID_PARENT',
+  CYCLE_DETECTED: 'PROMO_CYCLE_DETECTED',
+  LEVEL_EXCEEDED: 'PROMO_LEVEL_EXCEEDED',
+} as const;
+
+export const OrderErrors = {
+  NOT_FOUND: 'ORDER_NOT_FOUND',
+  INVALID_STATUS: 'ORDER_INVALID_STATUS',
+  PRODUCT_UNAVAILABLE: 'PRODUCT_UNAVAILABLE',
+  AMOUNT_TOO_LOW: 'AMOUNT_TOO_LOW',
+  INSUFFICIENT_BALANCE: 'INSUFFICIENT_BALANCE',
+} as const;
+
+export const WalletErrors = {
+  NOT_FOUND: 'WALLET_NOT_FOUND',
+  INSUFFICIENT_BALANCE: 'INSUFFICIENT_BALANCE',
+  WITHDRAW_TOO_LOW: 'WITHDRAW_TOO_LOW',
+  WITHDRAW_NOT_FOUND: 'WITHDRAW_NOT_FOUND',
+  INVALID_WITHDRAW_STATUS: 'INVALID_WITHDRAW_STATUS',
+} as const;
+
+export const RechargeErrors = {
+  NOT_FOUND: 'RECHARGE_NOT_FOUND',
+  AMOUNT_TOO_LOW: 'RECHARGE_AMOUNT_TOO_LOW',
+  INVALID_STATUS: 'RECHARGE_INVALID_STATUS',
+  AMOUNT_MISMATCH: 'RECHARGE_AMOUNT_MISMATCH',
+  INVALID_NOTIFY: 'INVALID_NOTIFY',
+} as const;
