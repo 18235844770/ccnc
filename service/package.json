@@ -10,7 +10,7 @@
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "test": "jest",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate": "prisma db push",
     "prisma:seed": "ts-node prisma/seed.ts",
     "prisma:studio": "prisma studio",
     "reconcile:wallets": "ts-node scripts/reconcile-wallets.ts"

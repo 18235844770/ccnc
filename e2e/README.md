@@ -4,7 +4,7 @@
 
 ## 前置
 
-1. MariaDB `3307` / Redis `6380`
+1. PostgreSQL `5432` / Redis `6380`
 2. 启动服务：
 
 ```bash

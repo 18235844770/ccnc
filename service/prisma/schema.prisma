@@ -3,14 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 // ===================== C 端用户 =====================
 
 model User {
-  id            Int      @id @default(autoincrement()) @db.UnsignedInt
+  id            Int      @id @default(autoincrement())
   username      String   @unique @db.VarChar(255)
   password_hash String   @db.VarChar(255)
   email         String?  @db.VarChar(255)
@@ -29,9 +29,9 @@ model User {
 }
 
 model UserRelation {
-  id             Int      @id @default(autoincrement()) @db.UnsignedInt
-  user_id        Int      @unique @db.UnsignedInt
-  parent_user_id Int      @db.UnsignedInt
+  id             Int      @id @default(autoincrement())
+  user_id        Int      @unique
+  parent_user_id Int
   level          Int
   path           String   @db.VarChar(255)
   created_at     DateTime @default(now())
@@ -44,8 +44,8 @@ model UserRelation {
 }
 
 model RealnameAuth {
-  id          Int      @id @default(autoincrement()) @db.UnsignedInt
-  user_id     Int      @unique @db.UnsignedInt
+  id          Int      @id @default(autoincrement())
+  user_id     Int      @unique
   real_name   String   @db.VarChar(50)
   id_card     String   @db.VarChar(100)
   auth_status String   @default("PENDING") @db.VarChar(20)
@@ -56,8 +56,8 @@ model RealnameAuth {
 }
 
 model PromotionLink {
-  id          Int      @id @default(autoincrement()) @db.UnsignedInt
-  user_id     Int      @unique @db.UnsignedInt
+  id          Int      @id @default(autoincrement())
+  user_id     Int      @unique
   invite_code String   @unique @db.VarChar(32)
   status      String   @default("ACTIVE") @db.VarChar(20)
   reset_at    DateTime?
@@ -72,7 +72,7 @@ model PromotionLink {
 // ===================== 产品 & 订单 =====================
 
 model Product {
-  id           Int      @id @default(autoincrement()) @db.UnsignedInt
+  id           Int      @id @default(autoincrement())
   name         String   @db.VarChar(100)
   description  String?  @db.Text
   yield_rate   Decimal  @db.Decimal(10, 4)
@@ -91,10 +91,10 @@ model Product {
 }
 
 model Order {
-  id            Int      @id @default(autoincrement()) @db.UnsignedInt
+  id            Int      @id @default(autoincrement())
   order_no      String   @unique @db.VarChar(64)
-  user_id       Int      @db.UnsignedInt
-  product_id    Int      @db.UnsignedInt
+  user_id       Int
+  product_id    Int
   amount        Decimal  @db.Decimal(15, 2)
   profit        Decimal? @db.Decimal(15, 2)
   reward_amount Decimal? @db.Decimal(15, 2)
@@ -114,12 +114,12 @@ model Order {
 // ===================== 分润 =====================
 
 model Commission {
-  id             Int       @id @default(autoincrement()) @db.UnsignedInt
+  id             Int       @id @default(autoincrement())
   biz_type       String    @db.VarChar(50)
   biz_id         String    @db.VarChar(100)
   event_id       String?   @db.VarChar(100)
-  from_user_id   Int       @db.UnsignedInt
-  to_user_id     Int       @db.UnsignedInt
+  from_user_id   Int
+  to_user_id     Int
   relation_level Int
   amount         Decimal   @db.Decimal(15, 2)
   status         String    @default("PENDING") @db.VarChar(20)
@@ -127,7 +127,7 @@ model Commission {
   settled_at     DateTime?
   paid_at        DateTime?
   manual_flag    Boolean   @default(false)
-  reverse_of     Int?      @db.UnsignedInt
+  reverse_of     Int?
   created_at     DateTime  @default(now())
   updated_at     DateTime  @updatedAt
 
@@ -137,7 +137,7 @@ model Commission {
 }
 
 model CommissionRule {
-  id           Int       @id @default(autoincrement()) @db.UnsignedInt
+  id           Int       @id @default(autoincrement())
   name         String    @db.VarChar(100)
   version      String    @db.VarChar(50)
   config       String    @db.Text
@@ -150,7 +150,7 @@ model CommissionRule {
 }
 
 model InviteProgress {
-  user_id      Int      @id @db.UnsignedInt
+  user_id      Int      @id
   valid_count  Int      @default(0)
   unlock_ratio Decimal  @default(0) @db.Decimal(5, 4)
   created_at   DateTime @default(now())
@@ -160,10 +160,10 @@ model InviteProgress {
 }
 
 model ValidInvite {
-  id              Int      @id @default(autoincrement()) @db.UnsignedInt
-  inviter_user_id Int      @db.UnsignedInt
-  invitee_user_id Int      @unique @db.UnsignedInt
-  order_id        Int      @db.UnsignedInt
+  id              Int      @id @default(autoincrement())
+  inviter_user_id Int
+  invitee_user_id Int      @unique
+  order_id        Int
   created_at      DateTime @default(now())
 
   @@unique([inviter_user_id, invitee_user_id])
@@ -173,8 +173,8 @@ model ValidInvite {
 // ===================== 资金 =====================
 
 model Wallet {
-  id                Int      @id @default(autoincrement()) @db.UnsignedInt
-  user_id           Int      @db.UnsignedInt
+  id                Int      @id @default(autoincrement())
+  user_id           Int
   type              String   @default("BALANCE") @db.VarChar(20)
   balance_available Decimal  @default(0) @db.Decimal(15, 2)
   balance_frozen    Decimal  @default(0) @db.Decimal(15, 2)
@@ -191,9 +191,9 @@ model Wallet {
 }
 
 model WalletLog {
-  id              Int      @id @default(autoincrement()) @db.UnsignedInt
-  wallet_id       Int      @db.UnsignedInt
-  user_id         Int      @db.UnsignedInt
+  id              Int      @id @default(autoincrement())
+  wallet_id       Int
+  user_id         Int
   type            String   @db.VarChar(20)
   wallet_type     String   @db.VarChar(20)
   reference_id    String   @db.VarChar(100)
@@ -212,14 +212,14 @@ model WalletLog {
 }
 
 model Withdraw {
-  id             Int      @id @default(autoincrement()) @db.UnsignedInt
-  user_id        Int      @db.UnsignedInt
-  wallet_id      Int      @db.UnsignedInt
+  id             Int      @id @default(autoincrement())
+  user_id        Int
+  wallet_id      Int
   amount         Decimal  @db.Decimal(15, 2)
   fee            Decimal  @default(0) @db.Decimal(15, 2)
   status         String   @default("PENDING") @db.VarChar(20)
   reason         String?  @db.VarChar(255)
-  audit_admin_id Int?     @db.UnsignedInt
+  audit_admin_id Int?
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
 
@@ -230,8 +230,8 @@ model Withdraw {
 }
 
 model RechargeOrder {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
-  user_id    Int      @db.UnsignedInt
+  id         Int      @id @default(autoincrement())
+  user_id    Int
   biz_id     String   @unique @db.VarChar(100)
   amount     Decimal  @db.Decimal(15, 2)
   status     String   @default("PENDING") @db.VarChar(20)
@@ -246,7 +246,7 @@ model RechargeOrder {
 // ===================== 内容 =====================
 
 model Banner {
-  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  id         Int       @id @default(autoincrement())
   title      String    @db.VarChar(100)
   image_url  String    @db.VarChar(500)
   link_url   String?   @db.VarChar(500)
@@ -262,9 +262,9 @@ model Banner {
 }
 
 model Article {
-  id           Int       @id @default(autoincrement()) @db.UnsignedInt
+  id           Int       @id @default(autoincrement())
   title        String    @db.VarChar(200)
-  content      String    @db.LongText
+  content      String    @db.Text
   tags         String?   @db.VarChar(255)
   description  String?   @db.VarChar(500)
   cover_image  String?   @db.VarChar(500)
@@ -282,7 +282,7 @@ model Article {
 // ===================== 管理端 RBAC =====================
 
 model AdminUser {
-  id              Int       @id @default(autoincrement()) @db.UnsignedInt
+  id              Int       @id @default(autoincrement())
   username        String    @unique @db.VarChar(50)
   password_hash   String    @db.VarChar(255)
   avatar          String?   @db.VarChar(255)
@@ -298,7 +298,7 @@ model AdminUser {
 }
 
 model SysRole {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  id         Int      @id @default(autoincrement())
   name       String   @db.VarChar(50)
   key        String   @unique @db.VarChar(50)
   status     String   @default("ACTIVE") @db.VarChar(20)
@@ -312,8 +312,8 @@ model SysRole {
 }
 
 model SysMenu {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
-  parent_id  Int      @default(0) @db.UnsignedInt
+  id         Int      @id @default(autoincrement())
+  parent_id  Int      @default(0)
   name       String   @db.VarChar(50)
   type       Int      @default(1)
   path       String?  @db.VarChar(200)
@@ -330,8 +330,8 @@ model SysMenu {
 }
 
 model AdminUserRole {
-  user_id Int @db.UnsignedInt
-  role_id Int @db.UnsignedInt
+  user_id Int
+  role_id Int
 
   admin AdminUser @relation(fields: [user_id], references: [id])
   role  SysRole   @relation(fields: [role_id], references: [id])
@@ -341,8 +341,8 @@ model AdminUserRole {
 }
 
 model SysRoleMenu {
-  role_id Int @db.UnsignedInt
-  menu_id Int @db.UnsignedInt
+  role_id Int
+  menu_id Int
 
   role SysRole @relation(fields: [role_id], references: [id])
   menu SysMenu @relation(fields: [menu_id], references: [id])
@@ -352,11 +352,11 @@ model SysRoleMenu {
 }
 
 model AuditLog {
-  id          Int      @id @default(autoincrement()) @db.UnsignedInt
-  admin_id    Int      @db.UnsignedInt
+  id          Int      @id @default(autoincrement())
+  admin_id    Int
   action      String   @db.VarChar(100)
   target_type String   @db.VarChar(50)
-  target_id   Int      @db.UnsignedInt
+  target_id   Int
   reason      String?  @db.Text
   before_data String?  @db.Text
   after_data  String?  @db.Text
@@ -369,7 +369,7 @@ model AuditLog {
 // ===================== 风控 =====================
 
 model RiskRule {
-  id          Int      @id @default(autoincrement()) @db.UnsignedInt
+  id          Int      @id @default(autoincrement())
   code        String   @unique @db.VarChar(50)
   name        String   @db.VarChar(100)
   rule_type   String   @db.VarChar(50)
@@ -383,9 +383,9 @@ model RiskRule {
 }
 
 model RiskEvent {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  id         Int      @id @default(autoincrement())
   rule_code  String   @db.VarChar(50)
-  user_id    Int?     @db.UnsignedInt
+  user_id    Int?
   severity   String   @default("MEDIUM") @db.VarChar(20)
   status     String   @default("OPEN") @db.VarChar(20)
   detail     String?  @db.Text

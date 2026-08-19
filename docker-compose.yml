@@ -1,18 +1,16 @@
 services:
-  mysql:
-    image: mariadb:10.11
-    container_name: ccnc-mysql
+  postgres:
+    image: postgres:16-alpine
+    container_name: ccnc-postgres
     restart: unless-stopped
     environment:
-      MARIADB_ROOT_PASSWORD: root123
-      MARIADB_DATABASE: ccnc
-      MARIADB_USER: ccnc
-      MARIADB_PASSWORD: ccnc123
+      POSTGRES_DB: ccnc
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: HyH5202
     ports:
-      - '3307:3306'
+      - '5432:5432'
     volumes:
-      - ccnc_mysql_data:/var/lib/mysql
-    command: --character-set-server=utf8mb4
+      - ccnc_postgres_data:/var/lib/postgresql/data
 
   redis:
     image: redis:7-alpine
@@ -24,5 +22,5 @@ services:
       - ccnc_redis_data:/data
 
 volumes:
-  ccnc_mysql_data:
+  ccnc_postgres_data:
   ccnc_redis_data:

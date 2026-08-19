@@ -21,14 +21,14 @@ CCNC/
 pnpm install
 ```
 
-### 2. 启动数据库（MariaDB + Redis）
+### 2. 启动数据库（PostgreSQL + Redis）
 
 ```bash
-docker compose up -d mysql
+docker compose up -d postgres redis
 ```
 
-> 本机 3306 端口已被占用时，MariaDB 映射到 **3307**，连接串见 `service/.env`  
-> `DATABASE_URL=mysql://ccnc:ccnc123@localhost:3307/ccnc`
+> 默认 PostgreSQL 端口为 **5432**，连接串见 `service/.env`  
+> `DATABASE_URL=postgresql://postgres:your_password@localhost:5432/ccnc?schema=public`
 
 ### 3. 初始化后端
 
