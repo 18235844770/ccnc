@@ -65,14 +65,14 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import { useRouter, useRoute } from "uniapp-router-next";
+import { useRoute } from "uniapp-router-next";
 import { useUserStore } from "@/store/user";
 import { login } from "@/api/auth";
 import { fetchUserInfo } from "@/api/user";
 import { parseTokenUserId } from "@/utils/auth";
+import { safeNavigate } from "@/utils/navigate";
 
 const userStore = useUserStore();
-const router = useRouter();
 const route = useRoute();
 const loading = ref(false);
 
@@ -88,32 +88,6 @@ onLoad((options) => {
   redirectUrl.value =
     (options?.redirect as string) || (route.query?.redirect as string) || "";
 });
-
-const TAB_PAGES = [
-  "/pages/index/index",
-  "/pages/explore/index",
-  "/pages/carbon/index",
-  "/pages/user/index",
-];
-
-async function navigateAfterLogin(target: string) {
-  const path = target.startsWith("/") ? target : `/${target}`;
-  const isTab = TAB_PAGES.includes(path);
-  try {
-    if (isTab) {
-      await router.reLaunch({ path });
-    } else {
-      await router.redirectTo({ path });
-    }
-  } catch (e) {
-    console.warn("router navigate failed, fallback:", e);
-    if (isTab) {
-      uni.reLaunch({ url: path });
-    } else {
-      uni.redirectTo({ url: path });
-    }
-  }
-}
 
 async function onLogin() {
   const { username, password } = form;
@@ -170,7 +144,7 @@ async function onLogin() {
         ? redirectUrl.value
         : "/pages/index/index";
     setTimeout(() => {
-      navigateAfterLogin(target);
+      safeNavigate(target, "/pages/index/index");
     }, 300);
   } catch (e) {
     console.error("login error:", e);

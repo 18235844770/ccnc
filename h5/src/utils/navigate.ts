@@ -1,5 +1,5 @@
 /** TabBar 页面路径（只能用 switchTab 打开） */
-const TAB_PAGES = new Set([
+export const TAB_PAGES = new Set([
   "/pages/index/index",
   "/pages/explore/index",
   "/pages/carbon/index",
@@ -7,8 +7,18 @@ const TAB_PAGES = new Set([
 ]);
 
 function normalizePath(url: string) {
-  const path = url.startsWith("/") ? url : `/${url}`;
-  return path.split("?")[0];
+  let raw = (url || "").trim();
+  try {
+    raw = decodeURIComponent(raw);
+  } catch {
+    // keep original
+  }
+  const hashIndex = raw.lastIndexOf("#/");
+  if (hashIndex >= 0) {
+    raw = raw.slice(hashIndex + 1);
+  }
+  const path = raw.startsWith("/") ? raw : `/${raw}`;
+  return path.split("?")[0].replace(/\/$/, "") || path.split("?")[0];
 }
 
 function goFallback(fallback: string) {
@@ -18,6 +28,36 @@ function goFallback(fallback: string) {
     return;
   }
   uni.reLaunch({ url: fallback.startsWith("/") ? fallback : `/${fallback}` });
+}
+
+/**
+ * 登录成功后跳转。tabBar 页必须用 switchTab，redirectTo 会报
+ * `redirectTo:fail can not redirectTo a tabbar page`。
+ */
+export function safeNavigate(url: string, fallback = "/pages/index/index") {
+  const fallbackPath = normalizePath(fallback);
+  const pathOnly = normalizePath(url) || fallbackPath;
+  const queryIndex = (url || "").indexOf("?");
+  const query = queryIndex >= 0 ? url.slice(queryIndex) : "";
+
+  if (TAB_PAGES.has(pathOnly)) {
+    uni.switchTab({
+      url: pathOnly,
+      fail: () => uni.reLaunch({ url: pathOnly }),
+    });
+    return;
+  }
+
+  const target = `${pathOnly}${query}`;
+  uni.redirectTo({
+    url: target,
+    fail: () => {
+      uni.reLaunch({
+        url: target,
+        fail: () => uni.switchTab({ url: fallbackPath }),
+      });
+    },
+  });
 }
 
 /**
